@@ -1,0 +1,22 @@
+---
+#become: true
+# tasks file for prework
+  - name: hostname of the vm
+    shell: uname -a
+  - name: install docker
+    yum:
+      name: docker
+      state: present
+  - name: install docker-py
+    yum:
+      name: docker-python
+      state: present
+  - name: install git
+    yum:
+      name: git
+      state: present
+  - name: start docker service
+    service:
+      name: docker
+      state: started
+
