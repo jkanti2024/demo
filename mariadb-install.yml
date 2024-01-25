@@ -1,0 +1,19 @@
+---    
+- name: Install MariaDB and Change Root Password
+  hosts: all
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars:
+    ansible_become_pass: "P@ssw0rd"
+  tasks:
+    - name: Install MariaDB Server
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Start MariaDB
+      systemd:
+        name: mariadb
+        state: started
+        enabled: yes
