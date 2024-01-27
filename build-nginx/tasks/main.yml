@@ -26,7 +26,7 @@
         path: /app
         args:
           log_volume: /var/log/myapp
-          listen_port: 8080
+          listen_port: 80
       source: build
         #  - name: Build image and with buildargs
         #  - name: Build an image and push it to a private repo
@@ -46,11 +46,14 @@
       # external_url: "https://github.com/jkantihub/jkantihub.github.io"
       #
       #
-  - name: Build an image and push it to a private repo
-    community.docker.docker_image:
-      build:
-        path: /app
-      name: mynginx
-      tag: v1
-      push: false
-      source: build
+      ######
+      #working
+  
+        #  - name: Build an image and push it to a private repo
+        #community.docker.docker_image:
+        #build:
+        #path: /app
+        #name: mynginx
+        #tag: v1
+        #push: false
+        #source: build
