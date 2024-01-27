@@ -7,7 +7,8 @@
       mode: 0755
   - name: Pull website
     git:
-      repo: "{{ SRC_GIT_URL }}" # eg. https://github.com/jkantihub/xxxx.io.git
+      repo: "https://github.com/jkantihub/jkantihub.github.io"
+      #repo: "{{ SRC_GIT_URL }}" # eg. https://github.com/jkantihub/xxxx.io.git
       dest: /app/www
   - name: Copy Dockerfile to /app for build
     copy:
@@ -17,9 +18,39 @@
     copy:
       src: "{{ role_path }}/files/default.conf"
       dest: /app/default.conf
-  - name: Build image and with buildargs
-    docker_image:
-      path: /app
+
+  - name: Build image and with build args
+    community.docker.docker_image:
       name: mynginx
-      buildargs:
-        external_url: "http://abc.xyz"
+      build:
+        path: /app
+        args:
+          log_volume: /var/log/myapp
+          listen_port: 8080
+      source: build
+        #  - name: Build image and with buildargs
+        #  - name: Build an image and push it to a private repo
+        #    docker_image:
+        #   build:
+        #      path: ./app
+        #    name: mynginx
+        #    tag: v1
+        #    push: false
+        #    source: build
+#      path: /app
+#      name: mynginx
+#      source: build
+#      build:         # <-- add
+        #  path: /app
+      #      buildargs:
+      # external_url: "https://github.com/jkantihub/jkantihub.github.io"
+      #
+      #
+  - name: Build an image and push it to a private repo
+    community.docker.docker_image:
+      build:
+        path: /app
+      name: mynginx
+      tag: v1
+      push: false
+      source: build
